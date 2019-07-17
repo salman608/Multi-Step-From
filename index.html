@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Bootstrap 4</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+
+  <style type="text/css">
+    #second,
+    #third,
+    #result {
+      display: none;
+    }
+  </style>
+</head>
+
+
+
+<body class="bg-dark">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 bg-light p-4 rounded mt-5">
+        <h5 class="text-center text-light bg-success md-2 p-2 rounded lead" id="result">
+          Multi-Step-Form
+        </h5>
+        <div class="progress mb-3" style="height:40px;">
+          <div class="progress-bar bg-danger rounded mb-2" role="progressbar" style="width:20%;height:40px;" id="progresBar">
+            <b class="lead" id="progressText">Step-1</b>
+          </div>
+        </div>
+
+        <form action="" method="post" id="form-data">
+          <div id="first">
+            <h4 class="text-center text-light bg-primary p-1 rounded">Personal Information</h4>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" name="name" class="form-control" id="name" placeholder="Full Name...">
+              <b class="form-text text-danger" id="nameError"></b>
+            </div>
+            <div class="form-group">
+              <label for="username">UserName</label>
+              <input type="text" name="username" class="form-control" id="username" placeholder="User Name...">
+              <b class="form-text text-danger" id="usernameError"></b>
+
+            </div>
+            <div class="form-group">
+              <a href="#" class="btn btn-danger" id="next-1">Next</a>
+
+            </div>
+          </div>
+
+
+          <!-- =================================== -->
+          <!-- second step -->
+          <div id="second">
+            <h4 class="text-center text-light bg-primary p-1 rounded">Contact Information</h4>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" name="email" class="form-control" id="email" placeholder="E-mail...">
+              <b class="form-text text-danger" id="emailError"></b>
+
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" name="phone" class="form-control" id="phone" placeholder="Phone...">
+              <b class="form-text text-danger" id="phoneError"></b>
+
+            </div>
+
+            <div class="form-group">
+              <a href="#" class="btn btn-danger" id="prev-2">Previous</a>
+              <a href="#" class="btn btn-danger" id="next-2">Next</a>
+            </div>
+
+          </div>
+
+          <div id="third">
+            <h4 class="text-center text-light bg-primary p-1 rounded">Chose Password</h4>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" name="pass" class="form-control" id="pass" placeholder="Password...">
+              <b class="form-text text-danger" id="passError"></b>
+
+            </div>
+
+            <div class="form-group">
+              <label for="conferm-password">Confirm-Password</label>
+              <input type="password" name="Cpass" class="form-control" id="cpass" placeholder="Confirm-Password...">
+              <b class="form-text text-danger" id="cpassError"></b>
+
+            </div>
+            <div class="form-group">
+              <a href="#" class="btn btn-danger" id="prev-3">Previous</a>
+              <input type="submit" class="btn btn-success" name="submit" id="submit" value="Submit">
+            </div>
+
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+  <!-- script start -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <!-- script end -->
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+
+      $("#next-1").click(function(e) {
+
+        e.preventDefault();
+        $("#nameError").html('');
+        $("#usernameError").html('');
+
+        if ($("#name").val() == '') {
+          $("#nameError").html("* Name is required");
+          return false;
+        } else if ($("#name").val().length < 3) {
+          $("#nameError").html("* Name must be more than 3 latter!!");
+          return false;
+
+        } else if (!isNaN($("#name").val())) {
+          $("#nameError").html("* Number is not allowed!!");
+          return false;
+
+        } else if ($("#username").val() == '') {
+          $("#usernameError").html("* UserName is required");
+          return false;
+        } else if ($("#username").val().length < 3) {
+          $("#usernameError").html("* UserName must be more than 3 latter!!");
+          return false;
+
+        } else if (!isNaN($("#username").val())) {
+          $("#usernameError").html("* Number is not allowed!!");
+          return false;
+
+        } else {
+
+          $("#second").show();
+          $("#first").hide();
+          $("#progresBar").css("width", "60%");
+          $("#progressText").html("step-2");
+        }
+
+
+      });
+
+      $("#next-2").click(function(e) {
+
+        e.preventDefault();
+
+        $("#emailError").html('');
+        $("#phoneError").html('');
+
+        if ($("#email").val() == '') {
+          $("#emailError").html("* Email is  required!!");
+          return false;
+        } else if (!validateEmail($("#email").val())) {
+          $("#emailError").html("* Email is not Valid!!");
+          return false;
+        } else if ($("#phone").val() == '') {
+          $("#phoneError").html("* Phone Number is  required!!");
+          return false;
+        } else if (isNaN($("#phone").val())) {
+          $("#phoneError").html("* Only Number is  required!!");
+          return false;
+        } else if ($("#phone").val().length != 11) {
+          $("#phoneError").html("* Phone Number must be 11 digit!!");
+          return false;
+        } else {
+
+          $("#third").show();
+          $("#second").hide();
+          $("#progresBar").css("width", "100%");
+          $("#progressText").html("step-3");
+        }
+
+
+
+
+        function validateEmail($email) {
+          var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+          return emailReg.test($email);
+        }
+
+      });
+
+      $("#submit").click(function(e) {
+        e.preventDefault();
+
+        $("#passError").html('');
+        $("#cpassError").html('');
+
+        if ($("#pass").val() == '') {
+          $("#passError").html("* Password is  required!!");
+          return false;
+        } else if ($("#pass").val().length < 6) {
+          $("#passError").html("* Password is  must be 6 character!!");
+          return false;
+        } else if ($("#cpass").val() == '') {
+          $("#cpassError").html("* Confirm Password is  required!!");
+          return false;
+        } else if ($("#pass").val() != $("#cpass").val()) {
+          $("#cpassError").html("* Confirm Password did not match!!");
+          return false;
+        }
+
+
+      });
+
+      $("#prev-2").click(function() {
+        $("#second").hide();
+        $("#first").show();
+        $("#progresBar").css("width", "20%");
+        $("#progressText").html("step-1");
+      });
+
+      $("#prev-3").click(function() {
+        $("#third").hide();
+        $("#second").show();
+        $("#progresBar").css("width", "60%");
+        $("#progressText").html("step-2");
+      });
+
+    });
+  </script>
+
+</body>
+
+</html>
